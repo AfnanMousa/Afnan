@@ -1,0 +1,210 @@
+package eg.edu.alexu.csd.oop.calculator;
+
+import java.util.LinkedList;
+import java.util.Stack;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+public class Function implements Calculator {
+
+	double num1;
+	double num2;
+	String Maths="";
+	String operation ="";
+	//LinkedList<String> Array_save=new LinkedList ();
+	public static Stack<String> input=new Stack();
+	public static Stack<String> input2=new Stack();
+	public final static int j=input.size();
+	public static int y=j;
+	public void input(String s)
+	{
+		boolean value=makesure ( s);
+		if(value)
+		{
+			if(s.contains("+"))
+			{
+				
+			     s=s.replaceAll(" ", "");
+				 String [] x=s.split("\\+");
+				 num1=Double.valueOf(x[0]);
+				 num2=Double.valueOf(x[1]);
+				 Maths="+";
+			}
+			else if(s.contains("−"))
+			{
+				
+				s=s.replaceAll(" ", "");
+    			String [] x=s.split("−");
+				num1=Double.valueOf(x[0]);
+			    num2=Double.valueOf(x[1]);
+			    Maths="−";
+				
+			}
+			else if(s.contains("X"))
+			{
+				s=s.replaceAll(" ", "");
+				String [] x=s.split("X");
+				num1=Double.valueOf(x[0]);
+				num2=Double.valueOf(x[1]);
+				Maths="X";
+				
+			}
+			else if(s.contains("÷"))
+			{
+				s=s.replaceAll(" ", "");
+				String [] x=s.split("÷");
+				num1=Double.valueOf(x[0]);
+				num2=Double.valueOf(x[1]);
+				Maths="÷";
+			}	
+		}
+		else
+		{
+			
+		}
+	}
+	
+	
+	
+	 public static String makeup (double x1,double x2,String Maths)
+	    {
+	    	 double ans11 = 0;
+		     if(Maths.equals("−"))
+		    {
+			 ans11= x1-x2;
+		    }
+		     else if(Maths.equals("+"))
+		     {
+		    	 ans11= x1+x2;
+		     }
+		     else if(Maths.equals("X"))
+		     {
+		    	 ans11= x1*x2;
+		     }
+		     else if(Maths.equals("÷"))
+		     {
+		    	 if(x2!=0.0)
+		    	 {
+		    		 ans11= x1/x2;
+		    	 }
+		    	 else
+		    	 {
+		    		 JFrame parent = new JFrame();
+		    		 JOptionPane.showMessageDialog(parent, "Cannot divide by zero‬");
+		    	 }
+		     }
+		     else
+		     {
+		    	 return "";
+		     }
+		    
+		     
+		     return String.valueOf(ans11);
+	    }
+	 public static boolean makesure (String text)
+	 {
+		 if(text.contains("+")||text.contains("−")||text.contains("X")||text.contains("÷"))
+			{
+				if(text.contains("+"))
+				{
+					text=text.replaceAll(" ", "");
+					String [] x=text.split("\\+");
+					if(x.length==2)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}		
+				}
+				else if(text.contains("−"))
+				{
+					text=text.replaceAll(" ", "");
+					String [] x=text.split("−");
+					if(x.length==2)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}	
+				}
+				else if(text.contains("X"))
+				{
+					text=text.replaceAll(" ", "");
+					String [] x=text.split("X");
+					if(x.length==2)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}	
+				}
+				else if(text.contains("÷"))
+				{
+					text=text.replaceAll(" ", "");
+					String [] x=text.split("÷");
+					if(x.length==2)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}	
+				}
+			}
+		 return false;
+		
+	 }
+	 public String getResult()
+	 {
+		 String value=makeup (num1,num2, Maths);
+		return value;
+	 }
+	 
+	 public String current ()
+	 {
+		 
+		 return input.peek();
+	 }
+	 public String prev()
+	 {
+		 if(j-5<y)
+		 {
+			 String x=input.pop();
+			 input2.push(x);
+			 y--;
+			 return x;
+		 }
+		 else 
+		 {
+			 JFrame parent = new JFrame();
+    		 JOptionPane.showMessageDialog(parent, "The Stack is Empty‬");
+    		 return "";
+		 }
+	 }
+	public String next()
+	 {
+		 
+		 if(y<j)
+		 {
+			 String x=input2.pop();
+			 input.push(x); 
+			 y++;
+			 return x;
+		 }
+		 else 
+		 {
+			 JFrame parent = new JFrame();
+    		 JOptionPane.showMessageDialog(parent, "This Is The Last operation");
+    		 return "";
+		 }
+	 }
+	
+}
